@@ -35,6 +35,9 @@ spec:
           - containerPort: 8080
             name: http
             protocol: TCP
+          - containerPort: 8787
+            name: debug
+            protocol: TCP
         resources:
           limits:
             cpu: 500m
