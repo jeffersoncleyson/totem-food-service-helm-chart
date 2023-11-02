@@ -14,12 +14,7 @@ loadBalancer:
 
 secrets:
   database:
-    host: mongo-mongodb-service.totem-apps.svc.cluster.local
-    port: 27017
-    dbname: totem-food
-    username: root
-    password: qwe123
-    auth: admin
+    uri: mongodb://root:qwe123@mongo-mongodb-service.totem-apps.svc.cluster.local:27017/totem-food?authSource=admin
   email:
     host: mailhog-mailhog-service.totem-apps.svc.cluster.local
     port: 1025
