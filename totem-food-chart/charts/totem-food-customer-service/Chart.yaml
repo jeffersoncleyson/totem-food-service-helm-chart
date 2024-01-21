@@ -1,0 +1,5 @@
+apiVersion: v2
+name: totem-food-customer-service
+description: Totem Food Customer Service - Help food stores to organize their customer
+version: 1.0.0
+appVersion: "v1.0.0"

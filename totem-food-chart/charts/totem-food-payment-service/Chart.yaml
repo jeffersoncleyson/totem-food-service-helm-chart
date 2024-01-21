@@ -1,0 +1,5 @@
+apiVersion: v2
+name: totem-food-payment-service
+description: Totem Food Payment Service - Help food stores to organize their payments
+version: 1.0.0
+appVersion: "v1.0.0"

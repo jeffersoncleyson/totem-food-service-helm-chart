@@ -1,11 +1,11 @@
 apiVersion: autoscaling/v2
 kind: HorizontalPodAutoscaler
 metadata:
-  name: {{ .Release.Name }}-totem-food
+  name: {{ .Release.Name }}-tfc
   labels:
-    app.kubernetes.io/component: {{ .Release.Name }}-totem-food
-    app.kubernetes.io/instance: {{ .Release.Name }}-totem-food
-    app.kubernetes.io/name: {{ .Release.Name }}-totem-food
+    app.kubernetes.io/component: {{ .Release.Name }}-tfc
+    app.kubernetes.io/instance: {{ .Release.Name }}-tfc
+    app.kubernetes.io/name: {{ .Release.Name }}-tfc
 spec:
   minReplicas: {{ .Values.hpa.min_replicas }}
   maxReplicas: {{ .Values.hpa.max_replicas }}
@@ -25,4 +25,4 @@ spec:
   scaleTargetRef:
     apiVersion: apps/v1
     kind: Deployment
-    name: {{ .Release.Name }}-totem-food
+    name: {{ .Release.Name }}-tfc
