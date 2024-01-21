@@ -1,0 +1,52 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app.kubernetes.io/instance: {{ .Release.Name }}-tfp
+    app.kubernetes.io/name: {{ .Release.Name }}-tfp
+  name: {{ .Release.Name }}-tfp
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app.kubernetes.io/instance: {{ .Release.Name }}-tfp
+      app.kubernetes.io/name: {{ .Release.Name }}-tfp
+  template:
+    metadata:
+      labels:
+        app: {{ .Release.Name }}-tfp
+        app.kubernetes.io/instance: {{ .Release.Name }}-tfp
+        app.kubernetes.io/name: {{ .Release.Name }}-tfp
+    spec:
+      containers:
+      - name: {{ .Chart.Name }}
+        image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+        imagePullPolicy: {{ .Values.image.pullPolicy }}
+        envFrom:
+          - secretRef:
+              name: {{ .Release.Name }}-tfp-database-secrets
+          - secretRef:
+              name: {{ .Release.Name }}-tfp-email-secrets
+          - secretRef:
+              name: {{ .Release.Name }}-tfp-payment-secrets
+          - secretRef:
+              name: {{ .Release.Name }}-tfp-cognito-secrets
+          - configMapRef:
+              name: {{ .Release.Name }}-tfp-internal-cfg
+        ports:
+          - containerPort: 8080
+            name: http
+            protocol: TCP
+          - containerPort: 8787
+            name: debug
+            protocol: TCP
+        resources:
+          limits:
+            cpu: 500m
+            memory: 512Mi
+          requests:
+            cpu: 200m
+            memory: 256Mi
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      terminationGracePeriodSeconds: 30

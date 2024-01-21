@@ -1,55 +1,134 @@
-replicaCount: 1
+totem-food-customer-service:
+  replicaCount: 1
 
-image:
-  repository: jeffersoncleyson/totem-food-service
-  tag: "temporary"
-  pullPolicy: IfNotPresent
+  image:
+    repository: jeffersoncleyson/totem-food-customer-service
+    tag: "v1.0.1"
+    pullPolicy: IfNotPresent
 
-service:
-  type: ClusterIP
+  service:
+    type: ClusterIP
 
-loadBalancer:
-  totem_food:
-    createPublicLB: false
+  loadBalancer:
+    totem_food:
+      createPublicLB: false
 
-secrets:
-  database:
-    uri: mongodb://root:qwe123@mongo-mongodb-service.totem-apps.svc.cluster.local:27017/totem-food?authSource=admin
-  email:
-    host: mailhog-mailhog-service.totem-apps.svc.cluster.local
-    port: 1025
-    username: username
-    password: password
-    auth:
+  secrets:
+    cognito:
+      userPoolId: userPoolId
+      clientId: clientId
+      clientSecret: clientSecret
+
+  ## https://towardsdatascience.com/how-to-set-up-ingress-controller-in-aws-eks-d745d9107307
+  ingress:
+    path:
+      value: /v1
+      type: Prefix
+
+  hpa:
+    min_replicas: 1
+    max_replicas: 10
+    target:
+      avg:
+        memory: 50
+        cpu: 50
+
+  env:
+    name: dev
+    inspect_beans: 
       enabled: false
-    tls:
+
+totem-food-payment-service:
+  replicaCount: 1
+
+  image:
+    repository: jeffersoncleyson/totem-food-payment-service
+    tag: "v1.0.2"
+    pullPolicy: IfNotPresent
+
+  service:
+    type: ClusterIP
+
+  loadBalancer:
+    totem_food:
+      createPublicLB: false
+
+  secrets:
+    database:
+      uri: mongodb://root:qwe123@mongo-mongodb-service.totem-apps.svc.cluster.local:27017/totem-food?authSource=admin
+    payment:
+      gateway:
+        url: http://payment-payment-gateway-service.totem-apps.svc.cluster.local:5000/v1/online-payment
+        callback: https://aws.lb/callback
+        store_id: POSTOTEM001
+        store_user_id: "XX3154YY0ZZ"
+        store_token_id: "Bearer TEST-TOKEN"
+
+  ## https://towardsdatascience.com/how-to-set-up-ingress-controller-in-aws-eks-d745d9107307
+  ingress:
+    path:
+      value: /v1
+      type: Prefix
+
+  hpa:
+    min_replicas: 1
+    max_replicas: 10
+    target:
+      avg:
+        memory: 50
+        cpu: 50
+
+  env:
+    name: dev
+    inspect_beans: 
       enabled: false
-    email: contato@totem.food.service.com.br
-  payment:
-    gateway:
-      url: http://payment-payment-gateway-service.totem-apps.svc.cluster.local:5000/v1/online-payment
-      callback: https://aws.lb/callback
-      store_id: POSTOTEM001
-      store_user_id: "XX3154YY0ZZ"
-      store_token_id: "Bearer TEST-TOKEN"
-  cognito:
-    userPoolId: userPoolId
-    clientId: clientId
-    clientSecret: clientSecret
 
-## https://towardsdatascience.com/how-to-set-up-ingress-controller-in-aws-eks-d745d9107307
-ingress:
-  path:
-    value: /v1
-    type: Prefix
 
-hpa:
-  min_replicas: 1
-  max_replicas: 10
-  target:
-    avg:
-      memory: 50
-      cpu: 50
+totem-food-order-service:
+  replicaCount: 1
 
-env:
-  name: dev
+  image:
+    repository: jeffersoncleyson/totem-food-order-service
+    tag: "v1.0.3"
+    pullPolicy: IfNotPresent
+
+  service:
+    type: ClusterIP
+
+  loadBalancer:
+    totem_food:
+      createPublicLB: false
+
+  secrets:
+    database:
+      uri: mongodb://root:qwe123@mongo-mongodb-service.totem-apps.svc.cluster.local:27017/totem-food?authSource=admin
+    email:
+      host: mailhog-mailhog-service.totem-apps.svc.cluster.local
+      port: 1025
+      username: username
+      password: password
+      auth:
+        enabled: false
+      tls:
+        enabled: false
+      email: contato@totem.food.service.com.br
+
+  ## https://towardsdatascience.com/how-to-set-up-ingress-controller-in-aws-eks-d745d9107307
+  ingress:
+    path:
+      value: /v1
+      type: Prefix
+
+  hpa:
+    min_replicas: 1
+    max_replicas: 10
+    target:
+      avg:
+        memory: 50
+        cpu: 50
+
+  env:
+    name: dev
+    inspect_beans: 
+      enabled: false
+

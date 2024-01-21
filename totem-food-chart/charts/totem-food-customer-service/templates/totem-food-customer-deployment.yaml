@@ -2,21 +2,21 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    app.kubernetes.io/instance: {{ .Release.Name }}-totem-food
-    app.kubernetes.io/name: {{ .Release.Name }}-totem-food
-  name: {{ .Release.Name }}-totem-food
+    app.kubernetes.io/instance: {{ .Release.Name }}-tfc
+    app.kubernetes.io/name: {{ .Release.Name }}-tfc
+  name: {{ .Release.Name }}-tfc
 spec:
   replicas: {{ .Values.replicaCount }}
   selector:
     matchLabels:
-      app.kubernetes.io/instance: {{ .Release.Name }}-totem-food
-      app.kubernetes.io/name: {{ .Release.Name }}-totem-food
+      app.kubernetes.io/instance: {{ .Release.Name }}-tfc
+      app.kubernetes.io/name: {{ .Release.Name }}-tfc
   template:
     metadata:
       labels:
-        app: {{ .Release.Name }}-totem-food
-        app.kubernetes.io/instance: {{ .Release.Name }}-totem-food
-        app.kubernetes.io/name: {{ .Release.Name }}-totem-food
+        app: {{ .Release.Name }}-tfc
+        app.kubernetes.io/instance: {{ .Release.Name }}-tfc
+        app.kubernetes.io/name: {{ .Release.Name }}-tfc
     spec:
       containers:
       - name: {{ .Chart.Name }}
@@ -24,13 +24,9 @@ spec:
         imagePullPolicy: {{ .Values.image.pullPolicy }}
         envFrom:
           - secretRef:
-              name: {{ .Release.Name }}-totem-food-database-secrets
-          - secretRef:
-              name: {{ .Release.Name }}-totem-food-email-secrets
-          - secretRef:
-              name: {{ .Release.Name }}-totem-food-payment-secrets
-          - secretRef:
-              name: {{ .Release.Name }}-totem-food-cognito-secrets
+              name: {{ .Release.Name }}-tfc-cognito-secrets
+          - configMapRef:
+              name: {{ .Release.Name }}-tfc-internal-cfg
         ports:
           - containerPort: 8080
             name: http

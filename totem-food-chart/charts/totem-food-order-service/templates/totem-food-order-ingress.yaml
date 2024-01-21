@@ -1,7 +1,7 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: {{ .Release.Name }}-totem-food-ingress
+  name: {{ .Release.Name }}-tfo-ingress
   annotations:
     alb.ingress.kubernetes.io/listen-ports: '[{"HTTP": 8080}]'
     alb.ingress.kubernetes.io/scheme: internet-facing
@@ -15,6 +15,6 @@ spec:
             pathType: {{ .Values.ingress.path.type }}
             backend:
               service:
-                name: {{ .Release.Name }}-totem-food-service
+                name: {{ .Release.Name }}-tfo-svc
                 port:
                   number: 8080

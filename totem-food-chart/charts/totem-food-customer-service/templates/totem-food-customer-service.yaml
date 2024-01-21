@@ -1,0 +1,21 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Release.Name }}-tfc-svc
+  labels:
+    app.kubernetes.io/instance: {{ .Release.Name }}-tfc
+    app.kubernetes.io/name: {{ .Release.Name }}-tfc
+spec:
+  ports:
+    - name: http
+      protocol: TCP
+      port: 8080
+      targetPort: http
+  selector:
+    app.kubernetes.io/instance: {{ .Release.Name }}-tfc
+    app.kubernetes.io/name: {{ .Release.Name }}-tfc
+  type: ClusterIP
+  ipFamilies:
+    - IPv4
+  ipFamilyPolicy: SingleStack
+  internalTrafficPolicy: Cluster

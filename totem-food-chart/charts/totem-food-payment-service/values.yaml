@@ -1,0 +1,43 @@
+replicaCount: 1
+
+image:
+  repository: jeffersoncleyson/totem-food-service
+  tag: "temporary"
+  pullPolicy: IfNotPresent
+
+service:
+  type: ClusterIP
+
+loadBalancer:
+  totem_food:
+    createPublicLB: false
+
+secrets:
+  database:
+    uri: mongodb://root:qwe123@mongo-mongodb-service.totem-apps.svc.cluster.local:27017/totem-food?authSource=admin
+  payment:
+    gateway:
+      url: http://payment-payment-gateway-service.totem-apps.svc.cluster.local:5000/v1/online-payment
+      callback: https://aws.lb/callback
+      store_id: POSTOTEM001
+      store_user_id: "XX3154YY0ZZ"
+      store_token_id: "Bearer TEST-TOKEN"
+
+## https://towardsdatascience.com/how-to-set-up-ingress-controller-in-aws-eks-d745d9107307
+ingress:
+  path:
+    value: /v1
+    type: Prefix
+
+hpa:
+  min_replicas: 1
+  max_replicas: 10
+  target:
+    avg:
+      memory: 50
+      cpu: 50
+
+env:
+  name: dev
+  inspect_beans: 
+    enabled: false

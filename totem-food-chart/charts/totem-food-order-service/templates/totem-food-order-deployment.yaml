@@ -1,0 +1,48 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app.kubernetes.io/instance: {{ .Release.Name }}-tfo
+    app.kubernetes.io/name: {{ .Release.Name }}-tfo
+  name: {{ .Release.Name }}-tfo
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app.kubernetes.io/instance: {{ .Release.Name }}-tfo
+      app.kubernetes.io/name: {{ .Release.Name }}-tfo
+  template:
+    metadata:
+      labels:
+        app: {{ .Release.Name }}-tfo
+        app.kubernetes.io/instance: {{ .Release.Name }}-tfo
+        app.kubernetes.io/name: {{ .Release.Name }}-tfo
+    spec:
+      containers:
+      - name: {{ .Chart.Name }}
+        image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+        imagePullPolicy: {{ .Values.image.pullPolicy }}
+        envFrom:
+          - secretRef:
+              name: {{ .Release.Name }}-tfo-database-secrets
+          - secretRef:
+              name: {{ .Release.Name }}-tfo-email-secrets
+          - configMapRef:
+              name: {{ .Release.Name }}-tfo-internal-cfg
+        ports:
+          - containerPort: 8080
+            name: http
+            protocol: TCP
+          - containerPort: 8787
+            name: debug
+            protocol: TCP
+        resources:
+          limits:
+            cpu: 500m
+            memory: 512Mi
+          requests:
+            cpu: 200m
+            memory: 256Mi
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      terminationGracePeriodSeconds: 30

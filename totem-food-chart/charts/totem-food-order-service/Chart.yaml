@@ -1,0 +1,5 @@
+apiVersion: v2
+name: totem-food-order-service
+description: Totem Food Order Service - Help food stores to organize their orders, products and products' categories
+version: 1.0.0
+appVersion: "v1.0.1"
