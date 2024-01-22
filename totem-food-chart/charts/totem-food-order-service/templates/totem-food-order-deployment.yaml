@@ -30,7 +30,7 @@ spec:
           - configMapRef:
               name: {{ .Release.Name }}-tfo-internal-cfg
         ports:
-          - containerPort: 8080
+          - containerPort: {{ .Values.service.port }}
             name: http
             protocol: TCP
           - containerPort: 8787

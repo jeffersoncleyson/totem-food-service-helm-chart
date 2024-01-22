@@ -10,3 +10,4 @@ data:
   MS_INTERNAL_PAYMENT: "http://{{ .Release.Name }}-tfp.{{ .Release.Namespace }}.svc.cluster.local:8080"
   MS_INTERNAL_ORDER: "http://{{ .Release.Name }}-tfo.{{ .Release.Namespace }}.svc.cluster.local:8080"
   INSPECT_BEANS: "{{ .Values.env.inspect_beans.enabled }}"
+  SERVER_PORT: {{ .Values.service.port | quote }}

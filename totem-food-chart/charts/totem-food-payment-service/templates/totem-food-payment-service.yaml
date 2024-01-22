@@ -9,7 +9,7 @@ spec:
   ports:
     - name: http
       protocol: TCP
-      port: 8080
+      port: {{ .Values.service.port }}
       targetPort: http
   selector:
     app.kubernetes.io/instance: {{ .Release.Name }}-tfp

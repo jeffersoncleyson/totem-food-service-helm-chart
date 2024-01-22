@@ -28,7 +28,7 @@ spec:
           - configMapRef:
               name: {{ .Release.Name }}-tfc-internal-cfg
         ports:
-          - containerPort: 8080
+          - containerPort: {{ .Values.service.port }}
             name: http
             protocol: TCP
           - containerPort: 8787
