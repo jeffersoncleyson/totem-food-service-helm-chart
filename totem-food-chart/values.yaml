@@ -8,6 +8,7 @@ totem-food-customer-service:
 
   service:
     type: ClusterIP
+    port: 8080
 
   loadBalancer:
     totem_food:
@@ -48,6 +49,7 @@ totem-food-payment-service:
 
   service:
     type: ClusterIP
+    port: 8080
 
   loadBalancer:
     totem_food:
@@ -94,6 +96,7 @@ totem-food-order-service:
 
   service:
     type: ClusterIP
+    port: 8080
 
   loadBalancer:
     totem_food:
