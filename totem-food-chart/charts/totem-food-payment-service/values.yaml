@@ -15,7 +15,9 @@ loadBalancer:
 
 secrets:
   database:
-    uri: mongodb://root:qwe123@mongo-mongodb-service.totem-apps.svc.cluster.local:27017/totem-food?authSource=admin
+    url: jdbc:mysql://mysql-service.totem-apps.svc.cluster.local:3306/db_payment?createDatabaseIfNotExist=true
+    username: root
+    password: root
   payment:
     gateway:
       url: http://payment-payment-gateway-service.totem-apps.svc.cluster.local:5000/v1/online-payment
