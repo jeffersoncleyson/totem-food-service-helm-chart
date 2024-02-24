@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app.kubernetes.io/instance: {{ .Release.Name }}-tfe
+    app.kubernetes.io/name: {{ .Release.Name }}-tfe
+  name: {{ .Release.Name }}-tfe
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app.kubernetes.io/instance: {{ .Release.Name }}-tfe
+      app.kubernetes.io/name: {{ .Release.Name }}-tfe
+  template:
+    metadata:
+      labels:
+        app: {{ .Release.Name }}-tfe
+        app.kubernetes.io/instance: {{ .Release.Name }}-tfe
+        app.kubernetes.io/name: {{ .Release.Name }}-tfe
+    spec:
+      containers:
+      - name: {{ .Chart.Name }}
+        image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+        imagePullPolicy: {{ .Values.image.pullPolicy }}
+        envFrom:
+          - secretRef:
+              name: {{ .Release.Name }}-tfe-email-secrets
+          - configMapRef:
+              name: {{ .Release.Name }}-tfe-internal-cfg
+        ports:
+          - containerPort: {{ .Values.service.port }}
+            name: http
+            protocol: TCP
+          - containerPort: 8787
+            name: debug
+            protocol: TCP
+        resources:
+          limits:
+            cpu: 500m
+            memory: 512Mi
+          requests:
+            cpu: 200m
+            memory: 256Mi
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      terminationGracePeriodSeconds: 30

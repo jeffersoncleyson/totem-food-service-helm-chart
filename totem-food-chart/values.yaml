@@ -135,3 +135,41 @@ totem-food-order-service:
     inspect_beans: 
       enabled: false
 
+
+totem-food-email-service:
+  replicaCount: 1
+
+  image:
+    repository: jeffersoncleyson/totem-food-email-service
+    tag: "v1.0.0"
+    pullPolicy: IfNotPresent
+
+  service:
+    type: ClusterIP
+    port: 8080
+
+  secrets:
+    email:
+      host: mailhog-mailhog-service.totem-apps.svc.cluster.local
+      port: 1025
+      username: username
+      password: password
+      auth:
+        enabled: false
+      tls:
+        enabled: false
+      email: contato@totem.food.service.com.br
+
+  hpa:
+    min_replicas: 1
+    max_replicas: 10
+    target:
+      avg:
+        memory: 50
+        cpu: 50
+
+  env:
+    name: dev
+    inspect_beans: 
+      enabled: false
+
