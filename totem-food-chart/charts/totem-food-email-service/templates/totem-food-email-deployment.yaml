@@ -27,6 +27,8 @@ spec:
               name: {{ .Release.Name }}-tfe-email-secrets
           - configMapRef:
               name: {{ .Release.Name }}-tfe-internal-cfg
+          - configMapRef:
+              name: {{ .Release.Name }}-tfe-sqs-cfg
         ports:
           - containerPort: {{ .Values.service.port }}
             name: http

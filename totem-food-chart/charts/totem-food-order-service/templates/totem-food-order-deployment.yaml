@@ -25,10 +25,10 @@ spec:
         envFrom:
           - secretRef:
               name: {{ .Release.Name }}-tfo-database-secrets
-          - secretRef:
-              name: {{ .Release.Name }}-tfo-email-secrets
           - configMapRef:
               name: {{ .Release.Name }}-tfo-internal-cfg
+          - configMapRef:
+              name: {{ .Release.Name }}-tfo-sns-sqs-cfg
         ports:
           - containerPort: {{ .Values.service.port }}
             name: http

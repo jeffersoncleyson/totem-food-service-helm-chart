@@ -25,6 +25,9 @@ secrets:
       enabled: false
     email: contato@totem.food.service.com.br
 
+config:
+  email_queue: email-queue
+
 hpa:
   min_replicas: 1
   max_replicas: 10

@@ -16,17 +16,11 @@ loadBalancer:
 secrets:
   database:
     uri: mongodb://root:qwe123@mongo-mongodb-service.totem-apps.svc.cluster.local:27017/totem-food?authSource=admin
-  email:
-    host: mailhog-mailhog-service.totem-apps.svc.cluster.local
-    port: 1025
-    username: username
-    password: password
-    auth:
-      enabled: false
-    tls:
-      enabled: false
-    email: contato@totem.food.service.com.br
 
+config:
+  payment_topic: payment-topic
+  payment_queue_update_order: payment-update-order-queue
+  
 ## https://towardsdatascience.com/how-to-set-up-ingress-controller-in-aws-eks-d745d9107307
 ingress:
   path:
