@@ -12,3 +12,5 @@ dependencies:
     version: "1.0.0"
   - name: "totem-food-payment-service"
     version: "1.0.0"
+  - name: "totem-food-email-service"
+    version: "1.0.0"

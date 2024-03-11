@@ -2,21 +2,21 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    app.kubernetes.io/instance: {{ .Release.Name }}-tfo
-    app.kubernetes.io/name: {{ .Release.Name }}-tfo
-  name: {{ .Release.Name }}-tfo
+    app.kubernetes.io/instance: {{ .Release.Name }}-tfe
+    app.kubernetes.io/name: {{ .Release.Name }}-tfe
+  name: {{ .Release.Name }}-tfe
 spec:
   replicas: {{ .Values.replicaCount }}
   selector:
     matchLabels:
-      app.kubernetes.io/instance: {{ .Release.Name }}-tfo
-      app.kubernetes.io/name: {{ .Release.Name }}-tfo
+      app.kubernetes.io/instance: {{ .Release.Name }}-tfe
+      app.kubernetes.io/name: {{ .Release.Name }}-tfe
   template:
     metadata:
       labels:
-        app: {{ .Release.Name }}-tfo
-        app.kubernetes.io/instance: {{ .Release.Name }}-tfo
-        app.kubernetes.io/name: {{ .Release.Name }}-tfo
+        app: {{ .Release.Name }}-tfe
+        app.kubernetes.io/instance: {{ .Release.Name }}-tfe
+        app.kubernetes.io/name: {{ .Release.Name }}-tfe
     spec:
       containers:
       - name: {{ .Chart.Name }}
@@ -24,11 +24,11 @@ spec:
         imagePullPolicy: {{ .Values.image.pullPolicy }}
         envFrom:
           - secretRef:
-              name: {{ .Release.Name }}-tfo-database-secrets
+              name: {{ .Release.Name }}-tfe-email-secrets
           - configMapRef:
-              name: {{ .Release.Name }}-tfo-internal-cfg
+              name: {{ .Release.Name }}-tfe-internal-cfg
           - configMapRef:
-              name: {{ .Release.Name }}-tfo-sns-sqs-cfg
+              name: {{ .Release.Name }}-tfe-sqs-cfg
         ports:
           - containerPort: {{ .Values.service.port }}
             name: http
