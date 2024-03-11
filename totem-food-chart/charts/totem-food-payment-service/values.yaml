@@ -26,6 +26,11 @@ secrets:
       store_user_id: "XX3154YY0ZZ"
       store_token_id: "Bearer TEST-TOKEN"
 
+config:
+  payment_topic: payment-topic
+  payment_create_queue: create-payment-queue
+  email_topic: email-topic
+
 ## https://towardsdatascience.com/how-to-set-up-ingress-controller-in-aws-eks-d745d9107307
 ingress:
   path:

@@ -29,6 +29,8 @@ spec:
               name: {{ .Release.Name }}-tfp-payment-secrets
           - configMapRef:
               name: {{ .Release.Name }}-tfp-internal-cfg
+          - configMapRef:
+              name: {{ .Release.Name }}-tfp-sqs-sns-cfg
         ports:
           - containerPort: {{ .Values.service.port }}
             name: http

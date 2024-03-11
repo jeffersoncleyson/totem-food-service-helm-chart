@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Release.Name }}-tfe-sqs-cfg
+  labels:
+    app.kubernetes.io/instance: {{ .Release.Name }}-tfe
+    app.kubernetes.io/name: {{ .Release.Name }}-tfe
+data:
+  EMAIL_QUEUE: {{ .Values.config.email_queue | quote }}
